@@ -1,0 +1,12 @@
+version: '3'
+services:
+  digibot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: digibot
+    restart: always
+    volumes:
+      - "./.env:/app/.env"
+    ports:
+      - "5000:5000"
