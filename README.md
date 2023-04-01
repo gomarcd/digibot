@@ -15,8 +15,9 @@ You need [Docker + Docker Compose](https://docs.docker.com/engine/install/ubuntu
 
 ## Usage
 
-- Clone repo
-- Make desired changes to `docker-compose.yml`
+- Clone repo & `cd` into dir
+- `mv example.env .env` and fill as needed
+- `mv example.docker-compose.yml docker-compose.yml` & change as needed
 - Do `docker compose up -d`
 
 Your application is now available at the specified port, default is: `localhost:5000`.
