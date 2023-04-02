@@ -35,3 +35,26 @@ If you are using `docker compose up -d --build` and find that your changes aren'
 `docker images | grep digibot` and then `docker rmi 038a9be924e5` to remove the old image and then redo your build command.
 
 `docker system prune` can also help for clean up.
+
+## Development server
+
+By default, this comes with a production-ready WSGI server, Gunicorn running on port 5000. That may not necessarily be what you want during development, so one thing you can do without having to change the Dockerfile but still be able to make changes without having to rebuild the container every time, is simply add this `command` to the compose yaml to override the Gunicorn server with the Flask dev server:
+
+```
+version: '3'
+services:
+  digibot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: flask --app app run --host=0.0.0.0 --debug
+    container_name: digibot
+    restart: always
+    volumes:
+      - "./.env:/app/.env"
+      - "./app/app.py:/app/app.py"
+    ports:
+      - "5000:5000"
+```
+
+So you can use that compose yaml in development, and just remove that `command` line in deployment.
