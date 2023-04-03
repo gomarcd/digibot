@@ -33,8 +33,6 @@ def token():
 @app.route('/', methods=['POST'])
 @jwt_required()
 def chat():
-    # Time the reqest
-    start_time = time.time()
 
     # Pass user input to Chat GPT-3    
     response = openai.ChatCompletion.create(
