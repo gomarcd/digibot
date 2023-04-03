@@ -22,6 +22,34 @@ You need [Docker + Docker Compose](https://docs.docker.com/engine/install/ubuntu
 
 Your application is now available at the specified port, default is: `localhost:5000`.
 
+Don't forget to create a `.env` file in project root and include:
+
+```
+OPENAI_API_KEY="yourOpenAIAPIKeyHere"
+JWT_SECRET_KEY="yourJWTSecretKeyHere"
+```
+
+Refer to your OpenAI account for its API key there.
+
+You can generate a JWT secret key using something like `openssl rand -hex 32`.
+
+## Test login
+
+Hit the login endpoint with:
+
+`curl -X POST -H "Content-Type: application/json" -d '{"username":"test", "password":"test"}' http://localhost:5000/login
+`
+
+You should receive an access token that looks something like this:
+
+`{
+  "access_token": "eylhbGciOiJIUzI1NiIsInR5c2I6IkpXVCJ9.eyJmcmVzaCI6ZmFsc4UsImlhdCI6MTY4MDQ4Mzk5OSwianRpIjoiYWE4Y2M3NDYtN2JkZC00MjQ5LWI1eDctODQzZjhmOTI5MjNhIiwidHlwzSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2ODA0ODM5OxksImV4cCI6MTY4MDQ4NDg5OX0.smGq7X4RyvMoXuOtKjuV89S7MYci25egr3Kd6WYfsuM"
+}`
+
+You can then make requests like this:
+
+`curl -X POST -H "Authorization: Bearer eylhbGciOiJIUzI1NiIsInR5c2I6IkpXVCJ9.eyJmcmVzaCI6ZmFsc4UsImlhdCI6MTY4MDQ4Mzk5OSwianRpIjoiYWE4Y2M3NDYtN2JkZC00MjQ5LWI1eDctODQzZjhmOTI5MjNhIiwidHlwzSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE2ODA0ODM5OxksImV4cCI6MTY4MDQ4NDg5OX0.smGq7X4RyvMoXuOtKjuV89S7MYci25egr3Kd6WYfsuM" -H "Content-Type: application/json" -d '{"input_text": "Hello, can you help me with something?"}' http://localhost:5000/`
+
 ## Customizing
 
 If you want to add or remove parts, just edit the `Dockerfile`. After saving your changes, make sure you build the image anew and then relaunch the container with the new image.
